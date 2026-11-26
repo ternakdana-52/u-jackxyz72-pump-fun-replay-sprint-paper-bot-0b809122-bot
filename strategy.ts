@@ -4,7 +4,11 @@
 // buys a curve once it is old enough to have survived its launch and its recent tape shows
 // real, accelerating buy pressure: SOL flowing in, several different buyers, the price
 // climbing and sitting near its window high, with the newer half of the window pulling in
-// more than the older half. The first buy is deliberately small; the bot only adds to a
+// more than the older half. The price must also sit near its 100-slot high, so the bot
+// buys a breakout, not a lower high inside a faded move: a curve whose 20-slot window
+// looks hot but whose longer high sits well above it is still falling from its top, and
+// the backtest shows that filter alone lifts the dev window and the rebuilt-window
+// median (see README). The first buy is deliberately small; the bot only adds to a
 // position while the price keeps stepping up and the inflow continues, so false starts
 // stay cheap and real runners get size. Every position is sold whole on the first of a
 // stop loss, a trailing stop off its best value, a fade in flow, a single huge sell, or
@@ -128,8 +132,8 @@ export const DEFAULT_PARAMS: Params = {
   maxEntries: 2,
   pyramid: true,
   rideRqSol: 1000,
-  breakoutWindow: 0,
-  breakoutNear: 1,
+  breakoutWindow: 100,
+  breakoutNear: 0.98,
   maxChunkSol: 1000,
   holdIfUp: 1000,
   initialSol: 0.2,
